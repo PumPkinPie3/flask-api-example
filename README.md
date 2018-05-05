@@ -10,14 +10,21 @@ flask-api-example
 $ pip install -r requirements.txt
 ```
 
+## ENVs
+- FLASK_APP
+- FLASK_ENV
+- MYSQL_DATABASE
+- MYSQL_USER
+- MYSQL_PASSWORD
+- MYSQL_HOST
+
 ## How to initialize database
 ```bash
-$ FLASK_APP=/path/to/application.py FLASK_APP=path/to/application.py flask create_db
-$ FLASK_APP=/path/to/application.py flask db init
-$ FLASK_APP=/path/to/application.py flask db migrate
+$ flask db_create
+$ flask db_init
 ```
 
 ## Run
 ```bash
-$ FLASK_APP=/path/to/application.py flask run
+$ flask run -h 0.0.0.0
 ```
