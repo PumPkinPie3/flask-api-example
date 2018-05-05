@@ -28,3 +28,8 @@ $ flask db_init
 ```bash
 $ flask run -h 0.0.0.0
 ```
+
+## Test
+```bash
+$ python -m unittest tests.test_api
+```
