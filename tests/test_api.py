@@ -21,7 +21,7 @@ class ApiTestCase(unittest.TestCase):
 
     @classmethod
     def get_request_data(cls, name):
-        file = './request_data/{}.json'.format(name)
+        file = './tests/request_data/{}.json'.format(name)
         with open(file) as json_file:
             data = json_file.read()
         return data
@@ -33,7 +33,7 @@ class ApiTestCase(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
 
         user = User.query.filter_by(id=1).one()
-        self.assertTrue(body == user.to_body())
+        self.assertTrue(body['id'] == user.id)
 
     def test_get_null_user(self):
         response = self.client.get('/users/2')
@@ -48,13 +48,11 @@ class ApiTestCase(unittest.TestCase):
         data = self.get_request_data(name)
         response = self.client.post('/users', data=data, content_type='application/json')
         body = json.loads(response.data.decode('utf-8'))
-        print(body)
 
         self.assertTrue(response.status_code == 200)
 
         user = User.query.filter_by(email='root@example.com').one()
-        print(user.to_body)
-        self.assertTrue(body == user.to_body())
+        self.assertTrue(body['id'] == user.id)
 
     def test_delete_user(self):
         response = self.client.delete('/users/1')
