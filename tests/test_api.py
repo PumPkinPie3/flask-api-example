@@ -1,12 +1,11 @@
 import json
 import unittest
 import inspect
-from tests.test_base import BaseTestCase
 from app import create_app, db
 from app.models import User
 
 
-class UserTestCase(BaseTestCase):
+class ApiTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.app_context = self.app.app_context()
@@ -19,6 +18,13 @@ class UserTestCase(BaseTestCase):
         User.query.delete()
         db.session.commit()
         db.session.remove()
+
+    @classmethod
+    def get_request_data(cls, name):
+        file = './request_data/{}.json'.format(name)
+        with open(file) as json_file:
+            data = json_file.read()
+        return data
 
     def test_get_user(self):
         response = self.client.get('/users/1')

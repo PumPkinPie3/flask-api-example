@@ -1,14 +1,13 @@
 import os
 from decimal import Decimal
 from datetime import datetime
-
 from flask import Flask, request
 from flask.json import JSONEncoder
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from .config import config
 from .log import Log
 from .errors import error_handler
+from .clis import cli_handler
 
 db = SQLAlchemy()
 log = Log()
@@ -22,12 +21,10 @@ def create_app():
     db.init_app(app)
     log.init_app(app)
 
-    Migrate(app, db)
-
     register_blueprints(app)
     register_teardowns(app)
     register_error_handler(app)
-    register_cli(app)
+    register_cli_handler(app)
 
     app.json_encoder = CustomJSONEncoder
 
@@ -49,7 +46,6 @@ def register_teardowns(app):
     def access_logger(e):
         if e is not None:
             app.logger.error(e)
-
         app.logger.info(request)
 
     @app.teardown_appcontext
@@ -63,16 +59,8 @@ def register_error_handler(app):
     error_handler(app)
 
 
-def register_cli(app):
-    import click
-    from sqlalchemy import create_engine
-
-    @app.cli.command(short_help='Create databases')
-    def create_db():
-        uri, database = app.config['SQLALCHEMY_DATABASE_URI'].rsplit('/', 1)
-        mysql_engine = create_engine(uri)
-        mysql_engine.execute('CREATE DATABASE IF NOT EXISTS `{}`;'.format(database))
-        click.echo('Create {} in {}'.format(database, uri.rsplit('@', 1)[1]))
+def register_cli_handler(app):
+    cli_handler(app)
 
 
 class CustomJSONEncoder(JSONEncoder):

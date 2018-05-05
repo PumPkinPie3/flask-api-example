@@ -5,10 +5,15 @@ class Config(object):
     DEBUG = False
     TESTING = False
 
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/flask-api-example_development'.format(**{
-        'user': os.getenv('MYSQL_USER', 'root'),
-        'password': os.getenv('MYSQL_PASSWORD', ''),
-        'host': os.getenv('MYSQL_HOST', 'localhost'),
+    MYSQL_USER = os.getenv('MYSQL_USER', 'root')
+    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', 'root')
+    MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')
+    MYSQL_DATABASE = os.getenv('MYSQL_DATABASE', 'flask-api-example_development')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{database}'.format(**{
+        'user': MYSQL_USER,
+        'password': MYSQL_PASSWORD,
+        'host': MYSQL_HOST,
+        'database': MYSQL_DATABASE
     })
 
     SQLALCHEMY_POOL_SIZE = 15
@@ -19,20 +24,30 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/flask-api-example_production'.format(**{
-        'user': os.getenv('MYSQL_USER'),
-        'password': os.getenv('MYSQL_PASSWORD'),
-        'host': os.getenv('MYSQL_HOST'),
+    MYSQL_USER = os.getenv('MYSQL_USER')
+    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+    MYSQL_HOST = os.getenv('MYSQL_HOST')
+    MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{database}'.format(**{
+        'user': MYSQL_USER,
+        'password': MYSQL_PASSWORD,
+        'host': MYSQL_HOST,
+        'database': MYSQL_DATABASE
     })
 
 
 class StagingConfig(Config):
     DEBUG = True
 
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/flask-api-example_staging'.format(**{
-        'user': os.getenv('MYSQL_USER', 'root'),
-        'password': os.getenv('MYSQL_PASSWORD', ''),
-        'host': os.getenv('MYSQL_HOST', 'localhost'),
+    MYSQL_USER = os.getenv('MYSQL_USER')
+    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+    MYSQL_HOST = os.getenv('MYSQL_HOST')
+    MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{database}'.format(**{
+        'user': MYSQL_USER,
+        'password': MYSQL_PASSWORD,
+        'host': MYSQL_HOST,
+        'database': MYSQL_DATABASE
     })
 
 
@@ -43,10 +58,15 @@ class DevelopmentConfig(Config):
 class TestConfig(Config):
     TESTING = True
 
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/flask-api-example_test'.format(**{
-        'user': os.getenv('MYSQL_USER', 'root'),
-        'password': os.getenv('MYSQL_PASSWORD', ''),
-        'host': os.getenv('MYSQL_HOST', 'localhost'),
+    MYSQL_USER = os.getenv('MYSQL_USER', 'root')
+    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', 'root')
+    MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')
+    MYSQL_DATABASE = os.getenv('MYSQL_DATABASE', 'flask-api-example_test')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{database}'.format(**{
+        'user': MYSQL_USER,
+        'password': MYSQL_PASSWORD,
+        'host': MYSQL_HOST,
+        'database': MYSQL_DATABASE
     })
 
 
